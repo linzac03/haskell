@@ -1,0 +1,12 @@
+Q1. e(4), e(5), e(7), deq, deq, e(8), deq, deq, e(9), e(10), deq, e(11)
+	1	  2	    3     3    3    4     4    4    5     6      6    7
+
+	7 cons ops since deq is cost 0.
+
+Q2. 1,2,3,4,5,6,7,8,9,10 inserted in order would have a max length path of 9 from 1 to 10 since root 1 counts as 0 and the resulting height of the tree is 10-1=9 (n-1)
+
+Q3. 1,2,3,4,5,6,7,8,9,10 inserted in order for the red/black tree would have a max length path of 10/2-1=4 (n/2-1) again the root is zero and a balanced binary tree should have the height property n/2-1
+
+Q4. Qualified types define functions on datatypes such as (/= and ==) in the Eq class in haskell. We need them to define how we handle values in our datatypes and extend the functionality of them. Ordinance is required for the naive Set implementation since it checks for greater than/less than relations which require an ordered sequence of values.
+
+Q5.      

@@ -1,0 +1,32 @@
+1. These are the files MySet.hs and MySet.java (Note: I didn't test the java one I know it doesn't work, but I think it paints the picture.)
+
+2. For union, intersect, and seteq I would of course need to add the functions themselves. I could also make use of the previously defined functions. For example, I could use member and insert together to define union of two sets, A and B let's say, by taking the first element of A checking its membership in respect to B and if it is not a member then insert it. Although, my definition of insert does this check already, so all I would need to do in the definition of union is take one element and insert it, then recursively call insert on the remainder of the set. Likewise, intersect and seteq could be defined using combinations of member, insert, and remove. Imperatively however, I may want to keep in mind tail call optimization while unioning, intersecting, or seteq'ing.
+
+3. I needed Eq in Haskell and likewise in Java I would need some type of equality measure on my set implementation. More than likely I would define this myself in Java as a method in the class.
+
+4. (NilB 1R NilB)
+   ((NilB) 1B (NilB 2R NilB)) 
+   ((NilB) 1B (NilB 2R (NilB 3R NilB))) -> ((NilB 1R NilB) 2B (NilB 3R NilB))
+   ((NilB 1R NilB) 2B (NilB 3R (NilB 4R NilB))) -> ((NilB 1R NilB) 2R NilB) 3B (NilB 4R NilB)))
+   ((((NilB 1B NilB) 2R NilB) 3B (NilB 4R (NilB 5R NilB)))) -> ((((NilB 1B NilB) 2R NilB) 3B (NilB 4R (NilB 5B NilB))))  
+   ((((NilB 1B NilB) 2R NilB) 3B (NilB 4R (NilB 5B (NilB 9R NilB))))) -> ((((NilB 1R NilB) 2B NilB) 3R NilB) 4B (NilB 5R (NilB 9B NilB)))))
+   ((((NilB 1R NilB) 2B NilB) 3R NilB) 4B (NilB 5R ((NilB 8R NilB) 9B NilB)))
+   ((((NilB 1R NilB) 2B NilB) 3R NilB) 4B (NilB 5R (((NilB 7B NilB) 8R NilB) 9B NilB))) -> ((((NilB 1B NilB) 2R NilB) 3B NilB) 4R NilB) 5B (((NilB 7R NilB) 8B NilB) 9R NilB)))
+	I think I'm doing this wrong anyway and it's taking up a lot of time...
+
+5. Plist.hs
+
+6. append: The appending of two P-lists will take O(n) time where n is the length of the P-list to be appended. A typical implementation of append will travel through the entirety of the list to be appended to and tack on only one element to the list. So given a list of length m and a list of length n, you're looking at something like O(m+1^n), a cons for every element in m plus the one being added to the length n times. Although, I think I may be missing a log perhaps.
+
+   length: For the P-list I believe this is done in close to O(n) if not O(log n), n again being the length of the list. Since for every element in the list we could either be counting the heads of both lists in the pair or just the single head of either list if one is empty. Another implementation may just traverse the single list popping as it goes and counting one for each pop leaving it as O(n) always.
+	
+   fold: This fold on P-list will be O(n) again with as many cons operations matching the head of the list as there are elements in the list, or it would be constant time if the matching doesn't count. I believe this to be the same story for typical lists.
+	
+   map: My map on P-lists uses fmap in the definition so I don't believe it is anymore efficient than maps on a typical list. That being said I believe for both it is O(n). (I feel like I'm saying that too much and I'm wrong)
+
+   reverse: The reverse on P-lists I believe takes constant time, O(1). The only thing necessary is to reverse the tuple. This probably takes O(n log n) for traditional lists.
+
+   
+   
+
+ 

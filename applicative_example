@@ -1,0 +1,48 @@
+class Functoe f => Applicative f where
+	pure :: a -> f a
+	<*> :: f (a -> b) -> f a -> f b
+
+-------------------
+
+Lifting fmap:
+
+	fmap :: a -> b -> f a -> f b
+
+	fmap g :: f a -> f b
+
+---------------------
+instance Applicative Maybe where 
+	pure = Just
+	Nothing <*> _ = Nothing
+	(Just f) <*> something = fmap f something
+
+-----------------------
+infixl 4 <*>
+
+(<$>) :: (Functor f) => (a -> b) -> f a -> f b
+f <$> x = fmap f x
+
+-----------------------
+((->)r):
+fmap = (.)
+
+----------------
+(\ x y z -> [x,y,z]) <$> (+3) <*> (*2) <*> (/2) $ 5
+
+---------------------------
+Monoid:
+
+class Monoid m where 
+	mempty :: m
+	mappend :: m -> m -> m
+	mconcat :: [m] -> m
+	mconcat = foldr mappend mempty
+
+instance Monoid [a] where
+	mempty = []
+	mappend = (++)
+
+rules-
+1. x op id = x
+2. id op x = x
+3. (x op y) op z = x op (y op z)

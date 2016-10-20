@@ -1,0 +1,84 @@
+-----------------
+Dequeues 
+ What is the representation type for the dequeue? 
+
+The dequeue is represented as a type of Deq a, represented as four lists constructed as Quad [a] [a] [a] [a]
+
+ What does your queue look like after the following insertions and deletions:
+insertL 1, insertL 2, insertL 3, insertR 4, insertR 5, removeL, removeR
+
+insertL 1 -> Quad [] [1] [] [1]
+insertL 2 -> Quad [2] [1] [] [1] 
+insertL 3 -> Quad [3,2] [1] [] [1]
+insertR 4 -> Quad [3,2] [4,1] [] [1]
+insertR 5 -> Quad [3,2] [5,4,1] [] [1]
+removeL   -> (3, Quad [2] [5,4,1] [] [])
+removeR	  -> (5, Quad [2] [4,1] [] [])
+
+ What does makedq do? 
+makedq enforces the properties of the dequeue to maintain efficiency and decides when a rotation is in order so that both the head and tail are readily accessible.
+
+ How does it achieve its O(1) behavior?
+The head and tail are kept accessible by one head operation. The tail will be allocated to another list inorder to still be accessible without traversing the entire dequeue.
+
+--------------
+Finger Trees
+ What is the representation for the finger tree?
+The finger tree can either be Empty, a Single value, or a Deep tree.
+The Deep tree contains Digits on either side with a finger tree in the middle (Deep (Digit a) (FingerTree a) (Digit a)).
+
+ Create 4 trees:
+    insert on the left 2 and 1
+    insert on the right 10 and 11
+    remove an element on the right
+    create a tree from the list [1 .. 10]
+ Empty 
+ insl 2 -> Single 2
+ insl 1 -> Deep [1] Empty [2]
+ insr 10 -> Deep [1] Empty [2,10]
+ insr 11 -> Deep [1] Empty [2,10,11]
+ viewR -> ConsR 2 (Deep [1] Empty [2,10,11])
+
+ [1,2,3,4,5,6,7,8,9,10]
+ reducer insl [1..10] Empty
+ Deep [1,2,3,4,5,6,7,8,9,10] Empty []
+ --I'm definitely missing something here
+
+ What is the big O of getting a value from the front or the rear? 
+The big O of getting and element from either side of the tree is O(1), however you can not get the last element of the tree in constant time since the digits are being held as lists. So reall you can only pick from the head or somewhere in the middle in constant time. Anything else I believe is O(log n) since you can pick head or rear with the divide already there.
+
+ Look at the append function. How does it work?
+The append function takes advantage of the Reduce class that has been implemented here. Using the ins's and liftins's it merges the two given trees by reinserting the elements from one tree into an empty tree and then proceeds to insert the elements from the second tree to continue building upon the new tree, kind of like a fold. 
+
+ How do finger tree achieve their efficiency? 
+By keeping their values at its finger tips there are almost no need for comparisons to traverse the tree which can be time consuming in an algorithm.Instead it's digits are accessible in constant time with comparisons being used then if needed. 
+
+---------------------
+red/black trees and avl trees
+
+ Create an avl tree from the list [1..10]
+insert Empty 1 -> Br Empty 1 Empty 0
+			 2 -> Br Empty 1 (Br Empty 2 Empty 0) 1
+			 3 -> Br Empty 1 (Br Empty 2 (Br Empty 3 Empty 0) 1) 2
+			 R -> Br (Br Empty 1 Empty 0) 2 (Br Empty 3 Empty 0) 1
+			 4 -> Br (Br Empty 1 Empty 0) 2 (Br Empty 3 (Br Empty 4 Empty 0) 1) 2
+			 5 -> Br (Br Empty 1 Empty 0) 2 (Br Empty 3 (Br Empty 4 (Br Empty 5 Empty 0) 1) 2) 3
+			 R -> Br (Br Empty 1 Empty 0) 2 (Br (Br Empty 3 Empty 0) 4 (Br Empty 5 Empty 0) 1) 2
+				......eventually you'll have something like...
+			 10 -> Br (Br (Br Empty 1 Empty 0) 2 (Br Empty 3 Empty 0) 1) 4 (Br (Br (Br Empty 5 Empty) 6 Empty 1) 7 (Br (Br Empty 8 Empty 0) 9 (Br Empty 10 Empty 0) 1) 2) 3
+
+ Describe how the rotations occur, what triggers the rotation, and what the resulting tree looks like in terms of the balance factors. 
+The rotations occur by moving the parent node either left or right becoming the child to either its right or left tree respectively. These rotations are triggered when the height of the tree no longer abides by the O(log n) height restriction. The resulting tree should have a height of approximately O(log n).
+
+ Create an redblack tree from the list [1..10] 
+The resulting tree will more or less look similar to the AVL tree above, in the interest of time I'll leave it at that.
+
+ Describe how the rotations occur, what triggers the rotation, and what the resulting tree looks like in terms of the balance factors. 
+The rotations occur similar to that of the rotations in an AVL tree, the parent node is moved either left or right gaining a subtree. The difference here being that the color changes accordingly to it's position in the tree. Once a red node is made a parent node and is not the child of another red node it changes from red to black. All newly inserted nodes will be red, and will possibly be changed upon rotating into a parent position. In terms of balanced the height of the tree will again be approximately O(log n).  
+			
+ How do the two trees compare in height
+I thought they were the same, or should be approximately. I think an AVL tree is a little more active in its pursuit to be balanced so maybe it turns out that it gets closer to O(log n) than Red/Black trees since Red/Black trees only rotate once a certain kind of node is neighboring another. You might say that Red/Black trees are 'lazier' than AVL trees and have a higher bound height compared to AVL trees. 			 
+			
+
+
+ 
